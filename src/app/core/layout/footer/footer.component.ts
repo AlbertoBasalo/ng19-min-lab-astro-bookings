@@ -11,7 +11,7 @@ import { Author } from "./author.type";
   selector: "lab-footer",
   template: `
     <footer>
-      <div>
+      <section>
         <!-- Signals must be invoked like functions -->
         <span>{{ appName() }}</span>
         <span>
@@ -20,17 +20,17 @@ import { Author } from "./author.type";
         </span>
         <span>©️ {{ year }}</span>
         <span>{{ version }}</span>
-      </div>
-      <div>
+      </section>
+      <section>
         <!-- The @if directive creates a conditional structure -->
         <!-- The @else directive creates the alternative structure -->
         @if(cookiesAccepted()){
         <span>🍪 Cookies accepted</span>
         } @else{
         <!-- Event binding can be used with (parenthesis) -->
-        <button (click)="acceptCookies()">Accept cookies</button>
+        <button class="secondary outline" (click)="acceptCookies()">Accept cookies</button>
         }
-      </div>
+      </section>
     </footer>
   `,
 })
