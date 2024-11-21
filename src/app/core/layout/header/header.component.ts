@@ -13,7 +13,21 @@ import { Component, input, InputSignal } from "@angular/core";
   selector: "lab-header",
   imports: [UpperCasePipe],
   template: `
-    <header>{{ title() | uppercase }}</header>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href="/">
+              <b>{{ title() | uppercase }}</b>
+            </a>
+          </li>
+        </ul>
+        <ul>
+          <li><a href="/about ">About</a></li>
+          <li><a href="/login">Login</a></li>
+        </ul>
+      </nav>
+    </header>
   `,
 })
 export class HeaderComponent {
