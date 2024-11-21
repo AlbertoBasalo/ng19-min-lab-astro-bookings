@@ -23,10 +23,6 @@ npm start
 
 ### Folder structure
 
-Have an outlook of the project folder structure
-
-![Folders](./docs/screenshots/folders.png)
-
 > [!TIP]
 > Companion article about Angular code organization:
 
