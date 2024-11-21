@@ -1,11 +1,17 @@
 {
   "name": "ng19-min-lab-astro-bookings",
-  "version": "0.0.0",
+  "version": "19.0.0",
+  "description": "Angular 19 Minimal Lab Astro Bookings",
+  "author": {
+    "name": "Alberto Basalo",
+    "url": "https://albertobasalo.dev"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run chrome && ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "chrome": "start chrome -incognito -auto-open-devtools-for-tabs http://localhost:4200"
   },
   "private": true,
   "dependencies": {
