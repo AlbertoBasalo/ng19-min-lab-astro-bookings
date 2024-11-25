@@ -1,0 +1,13 @@
+Angular tutorial día 1
+
+- Asegúrate de cumplir con los requisitos previos:
+Node.js LTS
+
+- Instala Angular CLI
+npm install -g @angular/cli@latest
+
+- Verifica la versión de Angular CLI
+ng version
+
+- Crea un proyecto Angular 19 mínimo
+ng new astro-bookings --minimal -p=lab --ssr=false --style=css --experimental-zoneless
