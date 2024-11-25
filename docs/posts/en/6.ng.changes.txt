@@ -1,0 +1,19 @@
+Angular tutorial day 6
+
+- Add signal properties to the component
+cookiesAccepted: WritableSignal<boolean> = signal<boolean>(false);
+
+- Signals can change over time
+protected acceptCookies() {
+  this.cookiesAccepted.set(true);
+}
+
+- Call methods from the template  
+<button (click)="acceptCookies()">Accept cookies</button>
+
+- Templates can show or hide elements based on a condition
+@if(cookiesAccepted()){
+  <span>🍪 Cookies accepted</span>
+} @else{
+  <button (click)="acceptCookies()">Accept cookies</button>
+}

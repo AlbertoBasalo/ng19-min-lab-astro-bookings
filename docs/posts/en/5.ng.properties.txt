@@ -1,0 +1,21 @@
+Angular tutorial day 5
+
+- Generate another component
+ng g c core/layout/header
+
+- Add a property to controller class that will be used as an input
+title: InputSignal<string> = input<string>();
+
+- Consume the property in the template calling it like a function
+{{ title() }}
+
+- Back to the app component use the new component with a title attribute
+<lab-header title="Astro Bookings" />
+
+- Bind the title property from the app component to the header component
+<lab-header [title]="title" />
+
+- Improve the presentation using pipes
+imports: [UpperCasePipe],
+template: <header>{{ title() | uppercase }}</header>
+
