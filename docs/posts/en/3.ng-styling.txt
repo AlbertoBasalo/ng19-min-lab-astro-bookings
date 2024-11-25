@@ -1,0 +1,18 @@
+Angular tutorial day 3
+
+- Add styling to the project with Pico.css
+npm install @picocss/pico
+
+- Add the styles to the angular.json file
+"styles": ["node_modules/@picocss/pico/css/pico.min.css", "src/styles.css"]
+
+- Add some styles to the src/styles.css file
+body {
+  margin: 5vw;
+}
+span {
+  margin-right: 1vw;
+}
+
+Restart the server to see the changes.
+npm start
