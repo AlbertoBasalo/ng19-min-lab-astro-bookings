@@ -1,0 +1,19 @@
+Angular tutorial día 6
+
+- Añade propiedades de señal al componente
+cookiesAccepted: WritableSignal<boolean> = signal<boolean>(false);
+
+- Las señales pueden cambiar con el tiempo
+protected acceptCookies() {
+  this.cookiesAccepted.set(true);
+}
+
+- Llama a los métodos desde el template
+<button (click)="acceptCookies()">Accept cookies</button>
+
+- El template puede mostrar u ocultar elementos en función de una condición
+@if(cookiesAccepted()){
+  <span>🍪 Cookies accepted</span>
+} @else{
+  <button (click)="acceptCookies()">Accept cookies</button>
+}

@@ -14,3 +14,8 @@ title: InputSignal<string> = input<string>();
 
 - Bind the title property from the app component to the header component
 <lab-header [title]="title" />
+
+- Improve the presentation using pipes
+imports: [UpperCasePipe],
+template: <header>{{ title() | uppercase }}</header>
+
