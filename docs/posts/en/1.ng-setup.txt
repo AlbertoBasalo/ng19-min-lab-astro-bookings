@@ -1,4 +1,4 @@
-Angular tutorial day 1
+Angular tutorial day 1 : Setup
 
 - Make sure to meet the prerequisites:
 Node.js LTS

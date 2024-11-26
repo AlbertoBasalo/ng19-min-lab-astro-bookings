@@ -1,0 +1,23 @@
+Angular tutorial day 8 : Lazy loading
+
+- Generate the LoginPage component
+ng g c routes/auth/login -c=OnPush --skip-selector --type=page
+> Mark the class as default export of the module
+
+- Configure the lazy routes
+{
+  path: 'auth/login',
+  loadComponent: () => import('./routes/auth/login/login.page'),
+}
+
+- Add links to the routes
+<a routerLink="/auth/login">🔑 Login</a>
+
+- Add the register page and a link from the LoginPage template
+ng g c routes/auth/register -c=OnPush --skip-selector --type=page
+{
+  path: 'auth/register',
+  loadComponent: () => import('./routes/auth/register/register.page'),
+}
+<a routerLink="/auth/register">🔏 Register if you don't have an account</a>
+

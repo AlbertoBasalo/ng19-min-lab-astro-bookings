@@ -1,4 +1,4 @@
-Angular tutorial day 4
+Angular tutorial day 4 : Generate a component
 
 - Generate an component
 ng g c core/layout/footer

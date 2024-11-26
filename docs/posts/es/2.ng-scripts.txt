@@ -1,4 +1,4 @@
-Angular tutorial día 2
+Angular tutorial día 2 : Scripts
 
 - Sirve el proyecto mientras haces cambios
 ng serve --open

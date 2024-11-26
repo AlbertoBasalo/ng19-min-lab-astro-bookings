@@ -1,4 +1,4 @@
-Angular tutorial día 5
+Angular tutorial día 5 : Properties
 
 - Genera otro componente
 ng g c core/layout/header

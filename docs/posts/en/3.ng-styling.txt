@@ -1,4 +1,4 @@
-Angular tutorial day 3
+Angular tutorial day 3: Styling
 
 - Add styling to the project with Pico.css
 npm install @picocss/pico
@@ -14,5 +14,5 @@ span {
   margin-right: 1vw;
 }
 
-Restart the server to see the changes.
+- Restart the server to see the changes.
 npm start

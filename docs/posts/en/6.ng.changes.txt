@@ -1,4 +1,4 @@
-Angular tutorial day 6
+Angular tutorial day 6 : Signals
 
 - Add signal properties to the component
 cookiesAccepted: WritableSignal<boolean> = signal<boolean>(false);

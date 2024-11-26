@@ -1,0 +1,13 @@
+Angular tutorial day 7 : Eager routing
+
+- Generate the HomePage component
+ng g c routes/home -c=OnPush --skip-selector --type=page
+
+- Configure the routes
+{ path: '', component: HomePage },
+
+- Add the router outlet to the AppComponent template
+<lab-header />
+<router-outlet />
+<lab-footer />
+

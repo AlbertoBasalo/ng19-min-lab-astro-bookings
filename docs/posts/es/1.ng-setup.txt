@@ -1,4 +1,4 @@
-Angular tutorial día 1
+Angular tutorial día 1 : Setup
 
 - Asegúrate de cumplir con los requisitos previos:
 Node.js LTS

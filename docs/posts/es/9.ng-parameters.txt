@@ -1,0 +1,29 @@
+Angular tutorial día 9 : Route parameters
+
+- Generar el componente LaunchDetailsPage
+ng g c routes/launches/launch-details -c=OnPush --skip-selector --type=page
+
+- Configurar las rutas con parámetros
+{
+  path: 'launches/:id',
+  loadComponent: () => import('./routes/launches/launch-details/launch-details.page'),
+}
+
+- Añadir enlaces dinámicos a la ruta
+@for (launch of launches; track launch.id) {
+  <li><a routerLink="/launches/{{ launch.id }}">
+      {{ launch.mission }} - {{ launch.date | date }}
+  </a></li>
+}
+
+- Configurar las rutas con enlaces de entrada de componentes
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes, withComponentInputBinding())]
+};
+
+- Obtener los parámetros de la ruta
+public readonly id: InputSignal<string> = input.required<string>();
+
+- Usar los parámetros de la ruta en la plantilla
+<p>launch-details for <b>{{ id() }}</b></p>
+

@@ -1,4 +1,4 @@
-Angular tutorial día 3
+Angular tutorial día 3 : Styling
 
 - Añade estilos al proyecto con Pico.css
 npm install @picocss/pico
