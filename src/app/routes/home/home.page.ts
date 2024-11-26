@@ -2,6 +2,12 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+/**
+ * Home page component
+ * - It is routed to the root path `/`
+ * - Do not need any selector as it is used by the router
+ * - It used OnPush change detection strategy to improve performance
+ */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe, RouterLink],
@@ -10,8 +16,9 @@ import { RouterLink } from '@angular/router';
       Next Space Travel launches
     </p>
     <ul>
-    @for (launch of launches; track launch.id) {
+      @for (launch of launches; track launch.id) {
         <li> 
+          <!-- A dynamic link -->
           <a [routerLink]="['/launches', launch.id]">
             {{ launch.mission }} - {{ launch.date | date }}
           </a> 
@@ -19,9 +26,11 @@ import { RouterLink } from '@angular/router';
       }
     </ul>
   `,
-  styles: ``
 })
 export class HomePage {
+  /**
+   * Array of launches
+   */
  protected launches = [
    {
      id: 'lnc-1',

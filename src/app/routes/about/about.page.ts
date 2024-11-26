@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
   template: `
     <article>
       <header>
@@ -41,7 +40,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styles: ``
 })
 export default class AboutPage {
-
   protected readonly features = [
     'Astro Bookings is a space travel booking app',
     'It is built with Angular and Astro',

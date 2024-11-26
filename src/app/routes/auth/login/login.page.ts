@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
     <p>
       login works!
     </p>
+    <!-- A relative link -->
     <a routerLink="../register">Register if you don't have an account</a>
   `,
   styles: ``
