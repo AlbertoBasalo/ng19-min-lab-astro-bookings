@@ -17,8 +17,6 @@ import { HeaderComponent } from "./core/layout/header/header.component";
   template: `
     <!-- Header component with title custom attribute -->
     <lab-header [title]="title" />
-    <h1>Welcome to {{ title }}!</h1>
-
     <router-outlet />
     <lab-footer [appName]="title" />
   `,
