@@ -18,4 +18,8 @@ export const routes: Routes = [
     path: 'auth/register',
     loadComponent: () => import('./routes/auth/register/register.page'),
   },
+  {
+    path: 'launches/:id',
+    loadComponent: () => import('./routes/launches/launch-details/launch-details.page'),
+  },
 ];

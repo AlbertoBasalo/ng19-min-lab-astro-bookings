@@ -9,6 +9,14 @@ import { Author } from "./author.type";
  */
 @Component({
   selector: "lab-footer",
+  styles: [
+    `
+      footer {
+        position: fixed;
+        bottom: 0;
+      }
+    `,
+  ],
   template: `
     <footer>
       <section>
