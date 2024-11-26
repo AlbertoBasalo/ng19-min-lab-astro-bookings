@@ -4,9 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
   template: `
-    <p>
-      register works!
-    </p>
+    <h2>🔏 Register</h2>
   `,
   styles: ``
 })

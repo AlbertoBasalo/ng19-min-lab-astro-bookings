@@ -91,5 +91,6 @@ export class FooterComponent {
    */
   protected acceptCookies() {
     this.cookiesAccepted.set(true);
+    // Alternative: this.cookiesAccepted.update(value => !value);
   }
 }

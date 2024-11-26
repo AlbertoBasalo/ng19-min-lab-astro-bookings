@@ -24,8 +24,9 @@ import { RouterLink } from "@angular/router";
           </li>
         </ul>
         <ul>
-          <li><a routerLink="/about">About</a></li>
-          <li><a routerLink="/auth/login">Login</a></li>
+          <li><a routerLink="/">🏠 Home</a></li>
+          <li><a routerLink="/about">ℹ️ About</a></li>
+          <li><a routerLink="/auth/login">🔒 Login</a></li>
         </ul>
       </nav>
     </header>

@@ -12,9 +12,7 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe, RouterLink],
   template: `
-    <p>
-      Next Space Travel launches
-    </p>
+    <h3>Next Space Travel launches</h3>
     <ul>
       @for (launch of launches; track launch.id) {
         <li> 
