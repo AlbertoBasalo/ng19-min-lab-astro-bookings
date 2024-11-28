@@ -1,36 +1,78 @@
-import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
+/**
+ * The login page component
+ */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, RouterLink],
+  imports: [RouterLink, FormsModule],
   template: `
     <h2>🔐 Login</h2>
-    <form #form="ngForm">
-      <section>
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email" [(ngModel)]="email" required email />
-      </section>
-      <section>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" [(ngModel)]="password" required minlength="4" />
-        @if (password().length > 0 && password().length < 4) {
+    <form #f="ngForm">
+      <fieldset>
+        <section>
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="email"
+            #emailModel="ngModel"
+            required
+            email
+            [attr.aria-invalid]="emailModel.invalid"
+          />
+          @if(emailModel.invalid){
+          <small>Invalid email</small>
+          }
+        </section>
+        <section>
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            [(ngModel)]="password"
+            #passwordModel="ngModel"
+            required
+            minlength="4"
+            aria-invalid="false"
+            [attr.aria-invalid]="passwordModel.invalid"
+          />
+          @if(passwordModel.invalid){
           <small>Password must be at least 4 characters long</small>
-        }
-      </section>
-      <button type="submit" [disabled]="form.invalid" (click)="login()">Login</button>
+          }
+        </section>
+      </fieldset>
+      <button type="submit" [disabled]="f.invalid" (click)="login()">
+        Login
+      </button>
     </form>
-    <!-- A relative link -->
-    <a routerLink="../register">🔏 Register if you don't have an account</a>
+    <a routerLink="../register">🔏 Register if don´t have an account</a>
   `,
-  styles: ``
 })
 export default class LoginPage {
-  readonly email: WritableSignal<string> = signal('');
-  readonly password: WritableSignal<string> = signal('');
+  /**
+   * The email basic property
+   */
+  protected email: string = 'a@b.c';
+  /**
+   * The password basic property
+   */
+  protected password: string = '';
 
-  login() {
-    console.log(this.email(), this.password());
+  /**
+   * Logs in a user
+   */
+  protected login(): void {
+    const loginDto = {
+      email: this.email,
+      password: this.password,
+    };
+    console.log('Login: ', loginDto);
   }
 }

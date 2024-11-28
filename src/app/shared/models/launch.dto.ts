@@ -1,3 +1,7 @@
+
+/**
+ * The launch data transfer object
+ */
 export type LaunchDto = {
   id: string;
   agencyId: string;
@@ -9,6 +13,10 @@ export type LaunchDto = {
   status: string;
 };
 
+/**
+ * The null launch object
+ * - Used to avoid undefined errors
+ */
 export const NULL_LAUNCH: LaunchDto = {
   id: '',
   agencyId: '',
