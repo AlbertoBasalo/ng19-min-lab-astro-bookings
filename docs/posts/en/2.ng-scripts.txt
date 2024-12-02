@@ -1,14 +1,11 @@
-Angular tutorial day 2 : Scripts
-
-- Serve the project while making changes
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 2️⃣ : Scripts
+✅ Serve the project while making changes
 ng serve --open
-
-- Make some changes to the project
+✅ Make some changes to the project
 Go to (src/app/app.component.ts) and change the title
 title = "Astro Bookings";
-
-- Build the project
+✅ Build the project
 ng build
-
-- Serve the build
+✅ Serve the build
 npx http-server dist/astro-bookings

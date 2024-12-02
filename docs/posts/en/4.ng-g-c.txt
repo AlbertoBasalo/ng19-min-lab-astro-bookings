@@ -1,22 +1,17 @@
-Angular tutorial day 4 : Generate a component
-
-- Generate an component
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 4: Generate a component
+✅ Generate an component
 ng g c core/layout/footer
-
-- Import the class component where needed
+✅ Import the class component where needed
 Go to (app.component.ts) and import the component
 import { FooterComponent } from "./core/layout/footer/footer.component";
-imports: [FooterComponent]
-
-- Use the selector in the template
+✅ Use the selector in the template
 <lab-footer />
-
-- Go back to the footer component and add properties to the controller class
+✅ Go back to the footer component and add properties to the controller class
 version= "1.0.0";
 year = new Date().getFullYear();
 author = { name: "Alberto Basalo", url: "https://albertobasalo.dev" };
-
-- Use them in the template
+✅ Use them in the template
 <footer >
   <p>Version: {{ version }}</p>
 <p>Year: {{ year }}</p>

@@ -1,0 +1,20 @@
+🅰️Angular  1️⃣9️⃣ 🎄Advent 
+Día 1️⃣ :  Setup
+✅ Asegúrate de contar con un Node.js >= 20
+✅ Instala Angular CLI
+npm i -g @angular/cli@latest
+✅ Verifica la versión de Angular CLI
+ng version
+✅ Crea un proyecto minimalista Angular
+ng new astro-bookings --minimal -p=lab --ssr=false --style=css --experimental-zoneless
+
+
+🅰️Angular 1️⃣9️⃣ 🎄Advent 
+Day 1️⃣ :  Setup
+✅ Make sure Node.js >= 20
+✅ Install Angular CLI:
+npm i -g @angular/cli@latest
+✅ Verify: 
+ng version
+✅ Create a minimal  Angular project:
+ng new astro-bookings --minimal -p=lab --ssr=false --style=css --experimental-zoneless

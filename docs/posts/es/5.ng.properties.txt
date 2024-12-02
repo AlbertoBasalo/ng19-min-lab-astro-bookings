@@ -1,20 +1,15 @@
-Angular tutorial día 5 : Properties
-
-- Genera otro componente
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 5: Properties
+✅ Genera otro componente
 ng g c core/layout/header
-
-- Añade una propiedad a la clase del controlador que se usará como entrada
+✅ Añade una propiedad a la clase del controlador que se usará como entrada
 title: InputSignal<string> = input<string>();
-
-- Consume la propiedad en el template llamándola como una función
+✅ Consume la propiedad en el template llamándola como una función
 {{ title() }}
-
-- Vuelve al componente app y usa el nuevo componente con un atributo title
+✅ Vuelve al componente app y usa el nuevo componente con un atributo title
 <lab-header title="Astro Bookings" />
-
-- Enlaza la propiedad title del componente app al componente header
+✅ Enlaza la propiedad title del componente app al componente header
 <lab-header [title]="title" />
-
-- Mejora la presentación usando tuberías
+✅ Mejora la presentación usando tuberías
 imports: [UpperCasePipe],
 template: `<header>{{ title() | uppercase }}</header>`
