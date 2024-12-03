@@ -1,21 +1,18 @@
-Angular tutorial día 8 : Lazy loading
-
-- Generar el componente LoginPage
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 8️⃣ : Lazy loading
+✅ Generar el componente LoginPage
 ng g c routes/auth/login -c=OnPush --skip-selector --type=page
-> Marcar la clase como exporto por defecto del módulo
-
-- Configurar las rutas de carga diferida
+✅ Marcar la clase como exporto por defecto del módulo
+✅ Configurar las rutas de carga diferida
 {
   path: 'auth/login',
   loadComponent: () => import('./routes/auth/login/login.page'),
 }
-
-- Añadir enlaces a las rutas
+✅ Añadir enlaces a las rutas
 <a routerLink="/auth/login">🔑 Login</a>
-
-- Añadir el componente RegisterPage y un enlace desde la plantilla de LoginPage
+✅ Añadir el componente RegisterPage y un enlace desde la plantilla de LoginPage
 ng g c routes/auth/register -c=OnPush --skip-selector --type=page
-{
+{ 
   path: 'auth/register',
   loadComponent: () => import('./routes/auth/register/register.page'),
 }
