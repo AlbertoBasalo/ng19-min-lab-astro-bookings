@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, ResourceRef, Signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { LaunchDto } from '@models/launch.dto';
 import { PageHeaderComponent } from '@ui/page-header.component';
 import { LaunchesRepository } from 'src/app/shared/api/launches.repository';
@@ -18,7 +19,11 @@ import { LaunchesListComponent } from './launches-list.component';
     <article>
       <lab-page-header [title]="title" subtitle="Choose your journey" />
       <main>
-        <lab-launches-list [launches]="launches" />
+        @if(launchesResource.status() === 2) {
+          <p>Loading...</p>
+        } @else {
+          <lab-launches-list [launches]="launches()" />
+        }
       </main>
     </article>
   `,
@@ -26,8 +31,16 @@ import { LaunchesListComponent } from './launches-list.component';
 export class HomePage {
   private readonly launchesRepository = inject(LaunchesRepository);
   protected readonly title: string = 'Upcoming Launches';
+
+  /**
+   * Resource of launches
+   * - Has signals with value, error, and working status
+   */
+  protected launchesResource: ResourceRef<LaunchDto[]> = rxResource({ loader: this.launchesRepository.getAll$ });
+
   /**
    * Array of launches
-   */
-  protected launches: LaunchDto[] = this.launchesRepository.getAll();
+   * - Signal computed from the launches resource
+  */
+  protected launches: Signal<LaunchDto[]> = computed(() => this.launchesResource.value() ?? []);
 }
