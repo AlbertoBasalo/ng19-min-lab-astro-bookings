@@ -5,8 +5,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   template: `
     <article>
       <header>
-      <h2>
-        About Astro Bookings sample app
+      <h1>
+        Astro Bookings 
+        </h1>
+        <h2>
+          Angular 19 Sample App
         </h2>
       </header>
       <main>

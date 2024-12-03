@@ -14,7 +14,7 @@ import { LaunchDto } from '../../shared/models/launch.dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe, RouterLink],
   template: `
-    <h3>Next Space Travel launches</h3>
+    <h2>Next Space Travel Launches</h2>
     <ul>
       @for (launch of launches; track launch.id) {
         <li> 
