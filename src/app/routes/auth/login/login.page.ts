@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '@ui/page-header.component';
-import { LoginDto } from '../../../shared/models/login.dto';
+import { LoginDto, NULL_LOGIN_DTO } from '../../../shared/models/login.dto';
 import { AuthService } from '../auth.service';
 import LoginForm from './login.form';
 
@@ -24,10 +25,19 @@ import LoginForm from './login.form';
 })
 export default class LoginPage {
   private readonly authService = inject(AuthService);
+  private readonly loginDto = signal(NULL_LOGIN_DTO);
+
+  /**
+   * Resource of the login action
+   */
+  protected loginResource = rxResource({
+    request: () => this.loginDto(),
+    loader: (param) => this.authService.login(param.request)
+  })
   /**
    * Logs in a user
    */
   protected login(loginDto: LoginDto ): void {
-    this.authService.login(loginDto).subscribe();
+    this.loginDto.set(loginDto);
   }
 }

@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '@ui/page-header.component';
-import { RegisterDto } from '../../../shared/models/register.dto';
+import { NULL_REGISTER_DTO, RegisterDto } from '../../../shared/models/register.dto';
 import { AuthService } from '../auth.service';
 import { RegisterForm } from './register.form';
 
@@ -24,10 +25,19 @@ import { RegisterForm } from './register.form';
 })
 export default class RegisterPage {
   private readonly authService = inject(AuthService);
+  private readonly registerDto = signal(NULL_REGISTER_DTO);
+
+  /**
+   * Resource of the register action
+   */
+  protected registerResource = rxResource({
+    request: () => this.registerDto(),
+    loader: (param) => this.authService.register(param.request)
+  })
   /**
    * Registers a user
    */
   protected register(registerDto: RegisterDto): void {
-    this.authService.register(registerDto).subscribe();
+    this.registerDto.set(registerDto);
   }
 }

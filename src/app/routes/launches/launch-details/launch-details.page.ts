@@ -18,8 +18,7 @@ import { RocketsRepository } from 'src/app/shared/api/rockets.repository';
       <lab-page-header [title]="title()" [subtitle]="subtitle()" />
       <main>
         <p>
-          <strong>Rocket:</strong> {{ rocket().name }} ({{ rocket().capacity }}
-          seats)
+          <strong>Rocket:</strong> {{ rocket().name }} ({{ rocket().capacity }} seats)
         </p>
         <p><strong>Destination:</strong> {{ launch().destination }}</p>
         <p><strong>Date:</strong> {{ launch().date | date : 'medium' }}</p>
@@ -59,17 +58,13 @@ export default class LaunchDetailsPage {
    * The title signal
    * - Computed from the launch mission
    */
-  protected readonly title: Signal<string> = computed(
-    () => '🚀 ' + this.launch().mission
-  );
+  protected readonly title: Signal<string> = computed( () => '🚀 ' + this.launch().mission );
 
   /**
    * The subtitle signal
    * - Computed from the launch id
    */
-  protected readonly subtitle: Signal<string> = computed(
-    () => 'launch-details for: ' + this.id()
-  );
+  protected readonly subtitle: Signal<string> = computed( () => 'launch-details for: ' + this.id() );
 
 
   protected rocketResource = rxResource({
@@ -82,6 +77,5 @@ export default class LaunchDetailsPage {
    * - Returns the rocket or NULL_ROCKET if the rocket is not found
    * - This way we do not need to check if the rocket is undefined before using it
    */
-  protected rocket: Signal<RocketDto> = 
-    computed(() => this.rocketResource.value() || NULL_ROCKET);
+  protected rocket: Signal<RocketDto> = computed(() => this.rocketResource.value() || NULL_ROCKET);
 }

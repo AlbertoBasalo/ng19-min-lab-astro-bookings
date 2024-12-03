@@ -1,27 +1,29 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
+import { AuthRepository } from "@api/auth.repository";
 import { LoginDto } from "@models/login.dto";
 import { RegisterDto } from "@models/register.dto";
-import { UserTokenDto } from "@models/user-token.dto";
+import { NULL_USER_TOKEN, UserTokenDto } from "@models/user-token.dto";
 import { Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly authRepository = inject(AuthRepository);
   /**
    * Logs in a user
    */
-  public login = (loginDto: LoginDto): Observable<UserTokenDto> => {
-    console.log('Login: ', loginDto);
-    return of({ userId: '1', token: 'token' });
+  public login = (loginDto: LoginDto| undefined): Observable<UserTokenDto> => {
+    if (!loginDto) return of(NULL_USER_TOKEN);
+    return this.authRepository.login(loginDto);
   }
 
 
   /**
    * Registers a user
    */
-  public register = (registerDto: RegisterDto): Observable<UserTokenDto> => {
-    console.log('Register: ', registerDto);
-    return of({ userId: '1', token: 'token' });
+  public register = (registerDto: RegisterDto| undefined): Observable<UserTokenDto> => {
+    if (!registerDto) return of(NULL_USER_TOKEN);
+    return this.authRepository.register(registerDto);
   }
 }
