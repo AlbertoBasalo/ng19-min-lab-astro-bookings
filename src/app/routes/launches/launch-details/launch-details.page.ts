@@ -66,7 +66,9 @@ export default class LaunchDetailsPage {
    */
   protected readonly subtitle: Signal<string> = computed( () => 'launch-details for: ' + this.id() );
 
-
+  /**
+   * Resource of the rocket
+   */
   protected rocketResource = rxResource({
     request: ()=> this.launch().rocketId,
     loader: (param) => this.rocketsRepository.getById$(param.request)
