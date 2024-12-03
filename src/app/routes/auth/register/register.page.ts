@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PageHeaderComponent } from '@ui/page-header.component';
 import { RegisterDto } from '../../../shared/models/register.dto';
+import { AuthService } from '../auth.service';
 import { RegisterForm } from './register.form';
 
 /**
@@ -9,18 +11,23 @@ import { RegisterForm } from './register.form';
  */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RegisterForm],
+  imports: [RouterLink, RegisterForm, PageHeaderComponent ],
   template: `
-    <h2>🔏 Register</h2>
-    <lab-register-form (register)="register($event)" />
-    <a routerLink="../login"> 🔐 Login if already have an account</a>
+    <article>
+      <lab-page-header title="🔏 Register" />
+      <lab-register-form (register)="register($event)" />
+      <footer>
+        <a routerLink="../login"> 🔐 Login if already have an account</a>
+      </footer>
+    </article>
   `,
 })
 export default class RegisterPage {
+  private readonly authService = inject(AuthService);
   /**
    * Registers a user
    */
   protected register(registerDto: RegisterDto): void {
-    console.log('Register: ', registerDto);
+    this.authService.register(registerDto).subscribe();
   }
 }

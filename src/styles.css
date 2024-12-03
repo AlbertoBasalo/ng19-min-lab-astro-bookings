@@ -4,7 +4,7 @@
 body {
   padding: 1rem;
   font-family: "IBM Plex Mono", monospace;
-  font-weight: 100;
+  font-weight: 300;
   font-style: normal;
 }
 
@@ -16,8 +16,6 @@ h1,h2{
 
 h3 {
   font-family: "IBM Plex Mono", monospace;
-  font-style: normal;
-  font-weight: 300;
 }
 
 /* Set right margin to 1vw for all span elements */

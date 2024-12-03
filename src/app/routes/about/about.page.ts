@@ -1,21 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { PageHeaderComponent } from '@ui/page-header.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [PageHeaderComponent],
   template: `
     <article>
-      <header>
-      <h1>
-        Astro Bookings 
-        </h1>
-        <h2>
-          Angular 19 Sample App
-        </h2>
-      </header>
+      <lab-page-header title="About Astro Bookings" />
       <main>
-        <h3>
-          Tech stack 
-        </h3>
+        <h3>Tech stack</h3>
         <ul>
           @for (tech of techStack; track tech.name) {
             <li>
@@ -23,15 +16,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
             </li>
           }
         </ul>
-        <h3>
-          Features 
-        </h3>
+        <h3>Features</h3>
         <ul>
-            @for (feature of features; track feature) {
-              <li>{{ feature }}</li>
-            }
-            </ul>
-          </main>
+          @for (feature of features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+      </main>
       <footer>
         <h3>Repository</h3>
         <a href="https://github.com/albertobasalo/ng19-min-lab-astro-bookings" target="_blank">
@@ -39,8 +30,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         </a>
       </footer>
     </article>
-  `,
-  styles: ``
+  `
 })
 export default class AboutPage {
   protected readonly features = [

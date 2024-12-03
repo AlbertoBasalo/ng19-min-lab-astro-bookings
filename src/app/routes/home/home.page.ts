@@ -1,8 +1,8 @@
-import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { LaunchDto } from '@models/launch.dto';
+import { PageHeaderComponent } from '@ui/page-header.component';
 import { LaunchesRepository } from 'src/app/shared/api/launches.repository';
+import { LaunchesListComponent } from './launches-list.component';
 
 /**
  * Home page component
@@ -13,23 +13,19 @@ import { LaunchesRepository } from 'src/app/shared/api/launches.repository';
  */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, RouterLink],
+  imports: [PageHeaderComponent, LaunchesListComponent],
   template: `
-    <h2>Next Space Travel Launches</h2>
-    <ul>
-      @for (launch of launches; track launch.id) {
-        <li> 
-          <!-- A dynamic link -->
-          <a [routerLink]="['/launches', launch.id]">
-            {{ launch.mission }} - {{ launch.date | date }}
-          </a> 
-        </li>
-      }
-    </ul>
+    <article>
+      <lab-page-header [title]="title" subtitle="Choose your journey" />
+      <main>
+        <lab-launches-list [launches]="launches" />
+      </main>
+    </article>
   `,
 })
 export class HomePage {
   private readonly launchesRepository = inject(LaunchesRepository);
+  protected readonly title: string = 'Upcoming Launches';
   /**
    * Array of launches
    */

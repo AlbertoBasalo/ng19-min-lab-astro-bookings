@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PageHeaderComponent } from '@ui/page-header.component';
 import { LoginDto } from '../../../shared/models/login.dto';
+import { AuthService } from '../auth.service';
 import LoginForm from './login.form';
 
 /**
@@ -9,18 +11,23 @@ import LoginForm from './login.form';
  */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, LoginForm ],
+  imports: [RouterLink, LoginForm, PageHeaderComponent],
   template: `
-    <h2>🔐 Login</h2>
-    <lab-login-form (login)="login($event)" />
-    <a routerLink="../register">🔏 Register if don´t have an account</a>
+    <article>
+      <lab-page-header title="🔐 Login" />
+      <lab-login-form (login)="login($event)" />
+      <footer>
+        <a routerLink="../register">🔏 Register if don´t have an account</a>
+      </footer>
+    </article>
   `,
 })
 export default class LoginPage {
+  private readonly authService = inject(AuthService);
   /**
    * Logs in a user
    */
   protected login(loginDto: LoginDto ): void {
-    console.log('Login: ', loginDto);
+    this.authService.login(loginDto).subscribe();
   }
 }
