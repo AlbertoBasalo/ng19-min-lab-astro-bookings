@@ -1,9 +1,12 @@
-import { Component, computed, effect, output, OutputEmitterRef, signal, viewChild, WritableSignal } from "@angular/core";
+import { Component, computed, effect, inject, output, OutputEmitterRef, signal, viewChild, WritableSignal } from "@angular/core";
 import { FormsModule, NgModel } from "@angular/forms";
-import { RegisterDto } from "../../../shared/models/register.dto";
+import { RegisterDto } from "@models/register.dto";
+import { FormsService } from "@services/forms.service";
 
 /**
  * The register form component
+ * - It is a form component to register a user
+ * @requires FormsService to check if the model must be marked as invalid
  */
 @Component({
   selector: 'lab-register-form',
@@ -82,6 +85,7 @@ import { RegisterDto } from "../../../shared/models/register.dto";
   `,
 })
 export  class RegisterForm {
+  private readonly formsService = inject(FormsService);
   /**
    * Emits an event when the form is submitted
    * - It is an output emitter
@@ -91,7 +95,7 @@ export  class RegisterForm {
   public readonly register: OutputEmitterRef<RegisterDto> = output<RegisterDto>();
 
   protected readonly username: WritableSignal<string> = signal('');
-  protected readonly email: WritableSignal<string> = signal('');
+  protected readonly email: WritableSignal<string> =   signal('');
   protected readonly password: WritableSignal<string> = signal('');
   protected readonly confirmPassword: WritableSignal<string> = signal('');
 
@@ -99,10 +103,7 @@ export  class RegisterForm {
    * Checks if the model must be marked as invalid
    * - It is a helper function to avoid pristine invalid marks
    */
-  protected readonly modelInvalid = (model: NgModel): boolean | undefined => {
-    if (!model.touched) return undefined;
-    return model.invalid === true;
-  }
+  protected readonly modelInvalid = (model: NgModel): boolean | undefined => this.formsService.modelInvalid(model);
 
   /**
    * The confirm password model template reference
@@ -126,21 +127,17 @@ export  class RegisterForm {
    * - the passwords matches computed signal changes
    */
   private passwordValidationEffect = effect(() => {
-    console.log('passwordValidationEffect');
     const model = this.confirmPasswordModel();
     if (!model) return;
     const control = model.control;
     if (this.passwordsMatches()) {
-      console.log('passwords matches');
       control.setErrors(null);
     } else {
-      console.log('passwords mismatch');
       control.setErrors({ passwordMismatch: true });
     }
   });
 
   protected submit(): void {
-    console.log('submit', this.username(), this.email(), this.password(), this.confirmPassword());
     const registerDto: RegisterDto = {
       username: this.username(),
       email: this.email(),

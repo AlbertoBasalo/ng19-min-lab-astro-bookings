@@ -1,11 +1,19 @@
-import { Component, output, OutputEmitterRef } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { LoginDto } from "../../../shared/models/login.dto";
+import { Component, inject, output, OutputEmitterRef } from "@angular/core";
+import { FormsModule, NgModel } from "@angular/forms";
+import { LoginDto } from "@models/login.dto";
+import { FormsService } from "@services/forms.service";
 
+
+/**
+ * Login form component
+ * - It is a form component to login a user
+ * @requires FormsService to check if the model must be marked as invalid
+ */
 @Component({
   selector: 'lab-login-form',
   imports: [FormsModule],
-  template: `    <form #f="ngForm">
+  template: `
+    <form #f="ngForm">
       <fieldset>
         <section>
           <label for="email">Email</label>
@@ -20,7 +28,7 @@ import { LoginDto } from "../../../shared/models/login.dto";
             email
             [attr.aria-invalid]="emailModel.invalid"
           />
-          @if(emailModel.invalid){
+          @if(this.modelInvalid(emailModel)){
           <small>Invalid email</small>
           }
         </section>
@@ -37,7 +45,7 @@ import { LoginDto } from "../../../shared/models/login.dto";
             minlength="4"
             [attr.aria-invalid]="passwordModel.invalid"
           />
-          @if(passwordModel.invalid){
+          @if(this.modelInvalid(passwordModel)){
           <small>Password must be at least 4 characters long</small>
           }
         </section>
@@ -48,6 +56,7 @@ import { LoginDto } from "../../../shared/models/login.dto";
     </form>`,
 })
 export default class LoginForm {
+  private readonly formsService = inject(FormsService);
   /**
    * Emits an event when the form is submitted
    * - It is an output emitter
@@ -64,6 +73,11 @@ export default class LoginForm {
    * The password basic property
    */
   protected password: string = '';
+  /**
+     * Checks if the model must be marked as invalid
+     * - It is a helper function to avoid pristine invalid marks
+     */
+  protected readonly modelInvalid = (model: NgModel): boolean | undefined => this.formsService.modelInvalid(model);
 
   /**
    * Submits the form value
