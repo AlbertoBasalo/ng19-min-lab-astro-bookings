@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, InputSigna
 import { rxResource } from '@angular/core/rxjs-interop';
 import { LaunchDto, NULL_LAUNCH } from '@models/launch.dto';
 import { NULL_ROCKET, RocketDto } from '@models/rocket.dto';
+import { UserTokenStore } from '@services/user-token.store';
 import { PageHeaderComponent } from '@ui/page-header.component';
 import { LaunchesRepository } from 'src/app/shared/api/launches.repository';
 import { RocketsRepository } from 'src/app/shared/api/rockets.repository';
@@ -22,12 +23,20 @@ import { RocketsRepository } from 'src/app/shared/api/rockets.repository';
         <p><b>Date: </b> {{ launch().date | date : 'medium' }}</p>
         <p><b>Price per seat: </b> {{ launch().pricePerSeat | currency }}</p>
       </main>
+      <footer>
+        @if (isLoggedIn()) {
+          <button (click)="book()">Book a seat</button>
+      } @else {
+          <p>Please login to book</p>
+        }
+      </footer>
     </article>
   `,
 })
 export default class LaunchDetailsPage {
   private readonly launchesRepository = inject(LaunchesRepository);
   private readonly rocketsRepository = inject(RocketsRepository);
+  private readonly userTokenStore = inject(UserTokenStore);
   /**
    * The launch id
    * - Comes from the route parameters
@@ -74,4 +83,10 @@ export default class LaunchDetailsPage {
    * - This way we do not need to check if the rocket is undefined before using it
    */
   protected readonly rocket: Signal<RocketDto> = computed(() => this.rocketResource.value() || NULL_ROCKET);
+
+  protected readonly isLoggedIn: Signal<boolean> = this.userTokenStore.isLoggedIn;
+
+  protected book() {
+    console.log('booking a seat on launch', this.launch().id);
+  }
 }

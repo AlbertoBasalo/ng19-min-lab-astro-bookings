@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '@ui/page-header.component';
 import { RegisterDto } from '../../../shared/models/register.dto';
-import { AuthService } from '../auth.service';
+import { AuthStore } from '../auth.store';
 import { RegisterForm } from './register.form';
 
 /**
@@ -24,12 +24,12 @@ import { RegisterForm } from './register.form';
   `,
 })
 export default class RegisterPage {
-  private readonly authService = inject(AuthService);
-  protected readonly result = this.authService.selectResult;
+  private readonly authStore = inject(AuthStore);
+  protected readonly result = this.authStore.selectResult;
   /**
    * Registers a user
    */
   protected register(registerDto: RegisterDto): void {
-    this.authService.dispatchRegister(registerDto);
+    this.authStore.dispatchRegister(registerDto);
   }
 }

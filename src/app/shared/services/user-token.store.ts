@@ -5,7 +5,7 @@ import { NULL_USER_TOKEN, UserTokenDto } from "@models/user-token.dto";
 @Injectable({
   providedIn: 'root',
 })
-export class AuthStore {
+export class UserTokenStore {
   private readonly state = signal<UserTokenDto>(NULL_USER_TOKEN);
 
   public readonly token: Signal<string> = computed(() => this.state().accessToken);

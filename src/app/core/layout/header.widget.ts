@@ -1,7 +1,7 @@
 import { UpperCasePipe } from "@angular/common";
 import { Component, computed, inject, input, InputSignal } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { AuthStore } from "@services/auth.store";
+import { UserTokenStore } from "@services/user-token.store";
 
 /**
  * Header component
@@ -42,7 +42,7 @@ import { AuthStore } from "@services/auth.store";
   `,
 })
 export class HeaderWidget {
-  private readonly authStore = inject(AuthStore);
+  private readonly userTokenStore = inject(UserTokenStore);
   /**
    * Application title
    * @requires title must be a `string`
@@ -50,5 +50,5 @@ export class HeaderWidget {
    */
   public readonly title: InputSignal<string> = input.required<string>();
 
-  protected readonly isAnonymous = computed(() => !this.authStore.isLoggedIn());
+  protected readonly isAnonymous = computed(() => !this.userTokenStore.isLoggedIn());
 }

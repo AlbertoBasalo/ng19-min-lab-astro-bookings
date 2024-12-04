@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '@ui/page-header.component';
 import { LoginDto } from '../../../shared/models/login.dto';
-import { AuthService } from '../auth.service';
+import { AuthStore } from '../auth.store';
 import LoginForm from './login.form';
 
 /**
@@ -24,13 +24,13 @@ import LoginForm from './login.form';
   `,
 })
 export default class LoginPage {
-  private readonly authService = inject(AuthService);
+  private readonly authStore = inject(AuthStore);
 
-  protected readonly result = this.authService.selectResult;
+  protected readonly result = this.authStore.selectResult;
   /**
    * Logs in a user
    */
   protected login(loginDto: LoginDto ): void {
-    this.authService.dispatchLogin(loginDto);
+    this.authStore.dispatchLogin(loginDto);
   }
 }

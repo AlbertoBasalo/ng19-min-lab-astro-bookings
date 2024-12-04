@@ -4,17 +4,18 @@ import { AuthRepository } from "@api/auth.repository";
 import { LoginDto } from "@models/login.dto";
 import { RegisterDto } from "@models/register.dto";
 import { NULL_USER_TOKEN, UserTokenDto } from "@models/user-token.dto";
-import { AuthStore } from "@services/auth.store";
+import { UserTokenStore } from "@services/user-token.store";
+
 import { Observable, of } from "rxjs";
 
-type Action =  {type: 'LOGIN', payload: LoginDto} | {type: 'REGISTER', payload: RegisterDto};
+type Action =  {type: 'POST_LOGIN', payload: LoginDto} | {type: 'POST_REGISTER', payload: RegisterDto};
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthStore {
   private readonly authRepository = inject(AuthRepository);
-  private readonly authStore = inject(AuthStore);
+  private readonly userTokenStore = inject(UserTokenStore);
   private readonly action = signal<Action | undefined>(undefined);
   private readonly authResource = rxResource({
     request: () => this.action(),
@@ -22,17 +23,19 @@ export class AuthService {
       const action = param.request as Action;
       if (!action) return of(NULL_USER_TOKEN);
       switch (action.type) { 
-        case 'LOGIN':
-          return this.login(action.payload);
-        case 'REGISTER':
-          return this.register(action.payload);
+        case 'POST_LOGIN':
+          return this.postLogin(action.payload);
+        case 'POST_REGISTER':
+          return this.postRegister(action.payload);
       }
     }
   })
   private readonly authStoreEffect = effect(() => {
-    const login = this.authResource.value();
-    if (login) {
-      this.authStore.login(login);
+    const userToken = this.authResource.value();
+    if (userToken) {
+      this.userTokenStore.login(userToken);
+    } else {
+      this.userTokenStore.logout();
     }
   });
 
@@ -52,23 +55,22 @@ export class AuthService {
    * Logs in a user
    */
   public dispatchLogin(loginDto: LoginDto): void {
-    this.action.set({type:'LOGIN', payload:loginDto});
+    this.action.set({type:'POST_LOGIN', payload:loginDto});
   }
 
   /**
    * Registers a user
    */
   public dispatchRegister(registerDto: RegisterDto): void {
-    console.log('📦 dispatchRegister', registerDto);
-    this.action.set({type:'REGISTER', payload:registerDto});
+    this.action.set({type:'POST_REGISTER', payload:registerDto});
   }
 
-  private login = (loginDto: LoginDto | undefined): Observable<UserTokenDto> => {
+  private postLogin = (loginDto: LoginDto | undefined): Observable<UserTokenDto> => {
     if (!loginDto || !loginDto.email || !loginDto.password) return of(NULL_USER_TOKEN);
     return this.authRepository.login(loginDto);
   }
 
-  private register = (registerDto: RegisterDto| undefined): Observable<UserTokenDto> => {
+  private postRegister = (registerDto: RegisterDto| undefined): Observable<UserTokenDto> => {
     if (!registerDto || !registerDto.email || !registerDto.password) return of(NULL_USER_TOKEN);
     return this.authRepository.register(registerDto);
   }
