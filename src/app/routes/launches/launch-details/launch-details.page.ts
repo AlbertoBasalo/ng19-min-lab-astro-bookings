@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, input, InputSignal, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, InputSignal, signal, Signal, WritableSignal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { LaunchDto, NULL_LAUNCH } from '@models/launch.dto';
 import { NULL_ROCKET, RocketDto } from '@models/rocket.dto';
@@ -7,13 +7,14 @@ import { UserTokenStore } from '@services/user-token.store';
 import { PageHeaderComponent } from '@ui/page-header.component';
 import { LaunchesRepository } from 'src/app/shared/api/launches.repository';
 import { RocketsRepository } from 'src/app/shared/api/rockets.repository';
+import BookSeatsForm from './book-seats.form';
 /**
  * The launch details page component
  * - route: /launches/:id
  */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, CurrencyPipe, PageHeaderComponent],
+  imports: [DatePipe, CurrencyPipe, PageHeaderComponent, BookSeatsForm],
   template: `
     <article>
       <lab-page-header [title]="title()" [subtitle]="subtitle()" />
@@ -24,11 +25,14 @@ import { RocketsRepository } from 'src/app/shared/api/rockets.repository';
         <p><b>Price per seat: </b> {{ launch().pricePerSeat | currency }}</p>
       </main>
       <footer>
-        @if (isLoggedIn()) {
-          <button (click)="book()">Book a seat</button>
-      } @else {
-          <p>Please login to book</p>
-        }
+        @defer (when isLoggedIn()) {
+          <lab-book-seats-form 
+            [launch]="launch()" 
+            [rocket]="rocket()" 
+            [(seats)]="bookSeats" 
+            (bookNow)="book()"
+          />
+      } 
       </footer>
     </article>
   `,
@@ -83,10 +87,23 @@ export default class LaunchDetailsPage {
    * - This way we do not need to check if the rocket is undefined before using it
    */
   protected readonly rocket: Signal<RocketDto> = computed(() => this.rocketResource.value() || NULL_ROCKET);
-
+  /**
+   * The user is logged in signal
+   */
   protected readonly isLoggedIn: Signal<boolean> = this.userTokenStore.isLoggedIn;
 
+  /**
+   * The number of seats to book
+   * - Set from the book-seats-form component
+   * - A model binding is an input/output signal
+   */
+  protected readonly bookSeats: WritableSignal<number> = signal<number>(0);
+
+  /**
+   * The book seats method
+   * - will dispatch a booking event to the server
+   */
   protected book() {
-    console.log('booking a seat on launch', this.launch().id);
+    console.log(`booking ${this.bookSeats()} seats on launch ${this.launch().id}`);
   }
 }
