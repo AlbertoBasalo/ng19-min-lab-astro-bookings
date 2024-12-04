@@ -42,7 +42,7 @@ import { Author } from "./author.type";
     </footer>
   `,
 })
-export class FooterComponent {
+export class FooterWidget {
   /**
    * App name
    * - It must be a `string`

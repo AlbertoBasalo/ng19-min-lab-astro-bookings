@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '@ui/page-header.component';
-import { LoginDto, NULL_LOGIN_DTO } from '../../../shared/models/login.dto';
+import { LoginDto } from '../../../shared/models/login.dto';
 import { AuthService } from '../auth.service';
 import LoginForm from './login.form';
 
@@ -17,6 +16,7 @@ import LoginForm from './login.form';
     <article>
       <lab-page-header title="🔐 Login" />
       <lab-login-form (login)="login($event)" />
+      <p>{{ result() }}</p>
       <footer>
         <a routerLink="../register">🔏 Register if don´t have an account</a>
       </footer>
@@ -25,19 +25,12 @@ import LoginForm from './login.form';
 })
 export default class LoginPage {
   private readonly authService = inject(AuthService);
-  private readonly loginDto = signal(NULL_LOGIN_DTO);
 
-  /**
-   * Resource of the login action
-   */
-  protected loginResource = rxResource({
-    request: () => this.loginDto(),
-    loader: (param) => this.authService.login(param.request)
-  })
+  protected readonly result = this.authService.selectResult;
   /**
    * Logs in a user
    */
   protected login(loginDto: LoginDto ): void {
-    this.loginDto.set(loginDto);
+    this.authService.dispatchLogin(loginDto);
   }
 }

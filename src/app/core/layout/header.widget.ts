@@ -1,6 +1,7 @@
 import { UpperCasePipe } from "@angular/common";
-import { Component, input, InputSignal } from "@angular/core";
+import { Component, computed, inject, input, InputSignal } from "@angular/core";
 import { RouterLink } from "@angular/router";
+import { AuthStore } from "@services/auth.store";
 
 /**
  * Header component
@@ -26,17 +27,28 @@ import { RouterLink } from "@angular/router";
         <ul>
           <li><a routerLink="/">🏠 Home</a></li>
           <li><a routerLink="/about">ℹ️ About</a></li>
-          <li><a routerLink="/auth/login">🔒 Login</a></li>
+          @if (isAnonymous()) {
+            <li>
+              <a routerLink="/auth/login">🔒 Login</a>
+            </li>
+          } @else {
+            <li>
+              <a routerLink="/">🎟️ My bookings</a>
+            </li>
+          }
         </ul>
       </nav>
     </header>
   `,
 })
-export class HeaderComponent {
+export class HeaderWidget {
+  private readonly authStore = inject(AuthStore);
   /**
    * Application title
    * @requires title must be a `string`
    * @throws an error if the value is not provided
    */
   public readonly title: InputSignal<string> = input.required<string>();
+
+  protected readonly isAnonymous = computed(() => !this.authStore.isLoggedIn());
 }
