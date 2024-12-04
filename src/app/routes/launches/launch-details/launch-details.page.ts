@@ -17,15 +17,10 @@ import { RocketsRepository } from 'src/app/shared/api/rockets.repository';
     <article>
       <lab-page-header [title]="title()" [subtitle]="subtitle()" />
       <main>
-        <p>
-          <strong>Rocket:</strong> {{ rocket().name }} ({{ rocket().capacity }} seats)
-        </p>
-        <p><strong>Destination:</strong> {{ launch().destination }}</p>
-        <p><strong>Date:</strong> {{ launch().date | date : 'medium' }}</p>
-        <p>
-          <strong>Price per seat:</strong>
-          {{ launch().pricePerSeat | currency }}
-        </p>
+        <p><b>Rocket: </b> {{ rocket().name }} ({{ rocket().capacity }} seats)</p>
+        <p><b>Destination: </b> {{ launch().destination }}</p>
+        <p><b>Date: </b> {{ launch().date | date : 'medium' }}</p>
+        <p><b>Price per seat: </b> {{ launch().pricePerSeat | currency }}</p>
       </main>
     </article>
   `,
@@ -51,8 +46,7 @@ export default class LaunchDetailsPage {
    * - Returns the launch or the NULL_LAUNCH if the launch is not found
    * - This way we avoid undefined errors
    */
-  protected launch: Signal<LaunchDto> = 
-    computed(() => this.launchResource.value() || NULL_LAUNCH);
+  protected readonly launch: Signal<LaunchDto> =  computed(() => this.launchResource.value() || NULL_LAUNCH);
 
   /**
    * The title signal
@@ -69,7 +63,7 @@ export default class LaunchDetailsPage {
   /**
    * Resource of the rocket
    */
-  protected rocketResource = rxResource({
+  protected readonly rocketResource = rxResource({
     request: ()=> this.launch().rocketId,
     loader: (param) => this.rocketsRepository.getById$(param.request)
   })
@@ -79,5 +73,5 @@ export default class LaunchDetailsPage {
    * - Returns the rocket or NULL_ROCKET if the rocket is not found
    * - This way we do not need to check if the rocket is undefined before using it
    */
-  protected rocket: Signal<RocketDto> = computed(() => this.rocketResource.value() || NULL_ROCKET);
+  protected readonly rocket: Signal<RocketDto> = computed(() => this.rocketResource.value() || NULL_ROCKET);
 }

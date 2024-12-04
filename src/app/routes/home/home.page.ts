@@ -19,10 +19,16 @@ import { LaunchesListComponent } from './launches-list.component';
     <article>
       <lab-page-header [title]="title" subtitle="Choose your journey" />
       <main>
-        @if(launchesResource.status() === 2) {
-          <p>Loading...</p>
-        } @else {
-          <lab-launches-list [launches]="launches()" />
+        @switch(launchesResource.status()) {
+          @case(1) {
+            <p>{{ errorMessage() }}</p>
+          }
+          @case(2) {
+            <p>Loading...</p>
+          }
+          @default {
+            <lab-launches-list [launches]="launches()" />
+          }
         }
       </main>
     </article>
@@ -36,11 +42,21 @@ export class HomePage {
    * Resource of launches
    * - Has signals with value, error, and working status
    */
-  protected launchesResource: ResourceRef<LaunchDto[]> = rxResource({ loader: this.launchesRepository.getAll$ });
+  protected readonly launchesResource: ResourceRef<LaunchDto[]> = rxResource(
+    { loader: this.launchesRepository.getAll$ }
+  );
 
   /**
    * Array of launches
    * - Signal computed from the launches resource
   */
-  protected launches: Signal<LaunchDto[]> = computed(() => this.launchesResource.value() ?? []);
+  protected readonly launches: Signal<LaunchDto[]> = computed(() => this.launchesResource.value() ?? []);
+
+  /**
+   * Error message
+   * - Signal computed from the launches resource error
+   */
+  protected readonly errorMessage: Signal<string> = computed(
+    () => ( this.launchesResource.error() as { message: string } )['message'] || 'Unknown error'
+  );
 }
