@@ -21,6 +21,8 @@ import { LaunchDto } from '@models/launch.dto';
           {{ launch.mission }} - {{ launch.date | date }}
         </a>
       </li>
+      } @empty {
+        <li>No launches found</li>
       }
     </ul>
   `,
