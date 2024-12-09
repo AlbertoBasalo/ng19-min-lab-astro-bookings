@@ -1,0 +1,32 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 1️⃣2️⃣ : Formularios con señales
+
+✅ Enlazar inputs a señales
+
+password = signal('');
+confirmPassword = signal('');
+
+<input
+    id="confirmPassword"
+    name="confirmPassword"
+    type="password"
+    placeholder="Confirm Password"
+    [(ngModel)]="confirmPassword"
+    #confirmPasswordModel="ngModel"
+    [attr.aria-invalid]="modelInvalid(confirmPasswordModel)"
+/>
+
+✅ Validar usando efectos y viewChild
+
+confirmPasswordModel = viewChild<NgModel>('confirmPasswordModel');
+private passwordValidationEffect = effect(() => {
+  const model = this.confirmPasswordModel();
+  if (!model) return;
+  const control = model.control;
+  if (this.password() === this.confirmPassword()) {
+    control.setErrors(null);
+  } else {
+    control.setErrors({ passwordMismatch: true });
+  }
+});
+
