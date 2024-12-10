@@ -25,11 +25,11 @@ import { RegisterForm } from './register.form';
 })
 export default class RegisterPage {
   private readonly authService = inject(AuthService);
-  protected readonly result = this.authService.selectResult;
+  protected readonly result = this.authService.result;
   /**
    * Registers a user
    */
   protected register(registerDto: RegisterDto): void {
-    this.authService.dispatchRegister(registerDto);
+    this.authService.register(registerDto);
   }
 }

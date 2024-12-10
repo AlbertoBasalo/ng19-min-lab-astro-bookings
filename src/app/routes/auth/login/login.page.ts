@@ -26,11 +26,11 @@ import LoginForm from './login.form';
 export default class LoginPage {
   private readonly authService = inject(AuthService);
 
-  protected readonly result = this.authService.selectResult;
+  protected readonly result = this.authService.result;
   /**
    * Logs in a user
    */
   protected login(loginDto: LoginDto ): void {
-    this.authService.dispatchLogin(loginDto);
+    this.authService.login(loginDto);
   }
 }
