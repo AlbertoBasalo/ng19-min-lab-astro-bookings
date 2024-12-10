@@ -6,19 +6,34 @@ import { RegisterDto } from "@models/register.dto";
 import { UserTokenDto } from "@models/user-token.dto";
 import { Observable } from "rxjs";
 
+/**
+ * The auth api repository
+ * - It is a service to handle the authentication requests
+ * @requires HttpClient to make the requests
+ * @requires environment to get the api url
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class AuthRepository {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = environment.apiUrl;
-  private readonly authEndpoint = `${this.apiUrl}`;
 
-  public login(login: LoginDto): Observable<UserTokenDto> {
-    return this.http.post<UserTokenDto>(`${this.authEndpoint}/login`, login);
+  /**
+   * Login the user
+   * @param login the login dto
+   * @returns the observable user token dto
+   */
+  public postLogin$(login: LoginDto): Observable<UserTokenDto> {
+    return this.http.post<UserTokenDto>(`${this.apiUrl}/login`, login);
   }
 
-  public register(register: RegisterDto): Observable<UserTokenDto> {
-    return this.http.post<UserTokenDto>(`${this.authEndpoint}/register`, register);
+  /**
+   * Register the user
+   * @param register the register dto
+   * @returns the observable user token dto
+   */
+  public postRegister$(register: RegisterDto): Observable<UserTokenDto> {
+    return this.http.post<UserTokenDto>(`${this.apiUrl}/register`, register);
   }
 }

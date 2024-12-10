@@ -4,6 +4,12 @@ import { environment } from "@environments/environment";
 import { LaunchDto } from "@models/launch.dto";
 import { Observable } from "rxjs";
 
+/**
+ * The launches api repository
+ * - It is a service to handle the launches requests
+ * @requires HttpClient to make the requests
+ * @requires environment to get the api url
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -12,14 +18,13 @@ export class LaunchesRepository {
   private readonly apiUrl = environment.apiUrl;
   private readonly launchesEndpoint = `${this.apiUrl}/launches`;
 
-
   /**
    * Gets all the launches
    * @returns An observable of the launches
    */
   public getAll$ = (): Observable<LaunchDto[]> => this.http.get<LaunchDto[]>(this.launchesEndpoint);
 
-   /**
+    /**
    * Gets a launch by id
    * @param id - The launch id
    * @returns An observable of the launch with the given id

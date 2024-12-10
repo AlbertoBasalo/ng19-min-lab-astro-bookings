@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, InputSigna
 import { rxResource } from '@angular/core/rxjs-interop';
 import { LaunchDto, NULL_LAUNCH } from '@models/launch.dto';
 import { NULL_ROCKET, RocketDto } from '@models/rocket.dto';
-import { UserTokenStore } from '@services/user-token.store';
+import { AuthStore } from '@services/user-token.store';
 import { PageHeaderComponent } from '@ui/page-header.component';
 import { LaunchesRepository } from 'src/app/shared/api/launches.repository';
 import { RocketsRepository } from 'src/app/shared/api/rockets.repository';
@@ -40,7 +40,7 @@ import BookSeatsForm from './book-seats.form';
 export default class LaunchDetailsPage {
   private readonly launchesRepository = inject(LaunchesRepository);
   private readonly rocketsRepository = inject(RocketsRepository);
-  private readonly userTokenStore = inject(UserTokenStore);
+  private readonly userTokenStore = inject(AuthStore);
   /**
    * The launch id
    * - Comes from the route parameters

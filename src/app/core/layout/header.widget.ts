@@ -1,7 +1,7 @@
 import { UpperCasePipe } from "@angular/common";
-import { Component, computed, inject, input, InputSignal } from "@angular/core";
+import { Component, inject, input, InputSignal, Signal } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { UserTokenStore } from "@services/user-token.store";
+import { AuthStore } from "@services/auth.store";
 
 /**
  * Header component
@@ -27,14 +27,11 @@ import { UserTokenStore } from "@services/user-token.store";
         <ul>
           <li><a routerLink="/">🏠 Home</a></li>
           <li><a routerLink="/about">ℹ️ About</a></li>
-          @if (isAnonymous()) {
-            <li>
-              <a routerLink="/auth/login">🔒 Login</a>
-            </li>
+          @if(isAuthenticated()) {
+            <li><a routerLink="/">🎟️ My Bookings</a></li>
+            <li (click)="logout()">👤 Log out</li>
           } @else {
-            <li>
-              <a routerLink="/">🎟️ My bookings</a>
-            </li>
+            <li><a routerLink="/auth/login">🔒 Login</a></li>
           }
         </ul>
       </nav>
@@ -42,7 +39,7 @@ import { UserTokenStore } from "@services/user-token.store";
   `,
 })
 export class HeaderWidget {
-  private readonly userTokenStore = inject(UserTokenStore);
+  private readonly authStore = inject(AuthStore);
   /**
    * Application title
    * @requires title must be a `string`
@@ -50,5 +47,16 @@ export class HeaderWidget {
    */
   public readonly title: InputSignal<string> = input.required<string>();
 
-  protected readonly isAnonymous = computed(() => !this.userTokenStore.isLoggedIn());
+  /**
+   * Selects if the user is authenticated
+   */
+  protected isAuthenticated: Signal<boolean> =
+    this.authStore.selectIsAuthenticated;
+
+  /**
+   * Logs out the user
+   */
+  protected logout() {
+    this.authStore.dispatchLogout();
+  }
 }

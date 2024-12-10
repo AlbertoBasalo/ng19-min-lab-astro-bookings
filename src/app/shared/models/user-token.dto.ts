@@ -7,6 +7,7 @@ export type UserTokenDto = {
     email: string;
   };
   accessToken: string;
+  refreshToken?: string;
 }
 
 /**
