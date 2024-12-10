@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { AuthRepository } from '@api/auth.repository';
+import { NULL_REGISTER_DTO, RegisterDto } from '@models/register.dto';
+import { NULL_USER_TOKEN } from '@models/user-token.dto';
+import { AuthStore } from '@services/auth.store';
 import { PageHeaderComponent } from '@ui/page-header.component';
-import { RegisterDto } from '../../../shared/models/register.dto';
-import { AuthStore } from '../auth.store';
 import { RegisterForm } from './register.form';
 
 /**
@@ -16,7 +19,6 @@ import { RegisterForm } from './register.form';
     <article>
       <lab-page-header title="🔏 Register" />
       <lab-register-form (register)="register($event)" />
-      <p>{{ result() }}</p>
       <footer>
         <a routerLink="../login"> 🔐 Login if already have an account</a>
       </footer>
@@ -24,12 +26,27 @@ import { RegisterForm } from './register.form';
   `,
 })
 export default class RegisterPage {
+  private readonly authService = inject(AuthRepository);
   private readonly authStore = inject(AuthStore);
-  protected readonly result = this.authStore.selectResult;
+  private registerDto: RegisterDto = NULL_REGISTER_DTO;
+
+  private readonly registerResource = rxResource({
+    loader: () => this.authService.postRegister$(this.registerDto),
+  });
+
+  private readonly storeEffect = effect(() => {
+    const userToken = this.registerResource.value();
+    if (!userToken || userToken === NULL_USER_TOKEN)
+      this.authStore.dispatchLogout();
+    else this.authStore.dispatchLogin(userToken);
+  });
+
   /**
    * Registers a user
    */
-  protected register(registerDto: RegisterDto): void {
-    this.authStore.dispatchRegister(registerDto);
+  protected register(registerDto: RegisterDto) {
+    console.log(registerDto);
+    this.registerDto = registerDto;
+    this.registerResource.reload();
   }
 }
