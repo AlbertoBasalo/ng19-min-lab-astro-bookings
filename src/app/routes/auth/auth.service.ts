@@ -9,6 +9,12 @@ import { Observable, of } from "rxjs";
 
 type Action =  {type: 'LOGIN', payload: LoginDto} | {type: 'REGISTER', payload: RegisterDto};
 
+/**
+ * The auth service
+ * - It is a service to handle the authentication requests
+ * @requires AuthRepository to make the requests
+ * @requires AuthStore to store the user token
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -36,6 +42,14 @@ export class AuthService {
     }
   });
 
+
+  // ToDo: mixed from branch 7
+  // 🔥 Simplify the code at this branch. 
+  // 🔥 Move the store stuff to the next branch.
+  
+  /**
+   * Selects the result of the authentication
+   */
   public readonly selectResult: Signal<string> = computed(() => {
     const value = this.authResource.value();
     if (value?.accessToken) {
@@ -65,11 +79,11 @@ export class AuthService {
 
   private login = (loginDto: LoginDto | undefined): Observable<UserTokenDto> => {
     if (!loginDto || !loginDto.email || !loginDto.password) return of(NULL_USER_TOKEN);
-    return this.authRepository.login(loginDto);
+    return this.authRepository.postLogin$(loginDto);
   }
 
   private register = (registerDto: RegisterDto| undefined): Observable<UserTokenDto> => {
     if (!registerDto || !registerDto.email || !registerDto.password) return of(NULL_USER_TOKEN);
-    return this.authRepository.register(registerDto);
+    return this.authRepository.postRegister$(registerDto);
   }
 }
