@@ -7,14 +7,18 @@ import { NULL_USER_TOKEN, UserTokenDto } from "@models/user-token.dto";
 import { UserTokenStore } from "@services/user-token.store";
 
 import { Observable, of } from "rxjs";
-
+/**
+ * The action type accepted by the auth store
+ * - Its is a union of the actions that the auth store can handle
+ * - PostLogin and PostRegister are the actions that the auth store can handle
+ */
 type Action =  {type: 'POST_LOGIN', payload: LoginDto} | {type: 'POST_REGISTER', payload: RegisterDto};
 
 /**
- * The auth service
+ * The auth store for the authentication requests
  * - It is a service to handle the authentication requests
  * @requires AuthRepository to make the requests
- * @requires AuthStore to store the user token
+ * @requires UserTokenStore to store the user token
  */
 @Injectable({
   providedIn: 'root',
@@ -45,10 +49,6 @@ export class AuthStore {
     }
   });
 
-
-  // ToDo: mixed from branch 7
-  // 🔥 Simplify the code at this branch. 
-  // 🔥 Move the store stuff to the next branch.
   
   /**
    * Selects the result of the authentication
