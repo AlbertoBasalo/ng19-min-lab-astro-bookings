@@ -4,6 +4,12 @@ import { environment } from "@environments/environment";
 import { RocketDto } from "@models/rocket.dto";
 import { Observable } from "rxjs";
 
+/**
+ * The rockets api repository
+ * - It is a service to handle the rockets requests
+ * @requires HttpClient to make the requests
+ * @requires environment to get the api url
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -12,14 +18,14 @@ export class RocketsRepository {
   private readonly apiUrl = environment.apiUrl;
   private readonly rocketsEndpoint = `${this.apiUrl}/rockets`;
 
-
   /**
    * Gets all the rockets
    * @returns An observable of the rockets
    */
   public getAll$ = (): Observable<RocketDto[]> => this.http.get<RocketDto[]>(this.rocketsEndpoint);
 
-   /**
+
+  /**
    * Gets a rocket by id
    * @param id - The rocket id
    * @returns An observable of the rocket with the given id
