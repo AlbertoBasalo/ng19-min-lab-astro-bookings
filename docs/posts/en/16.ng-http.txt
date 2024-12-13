@@ -1,0 +1,16 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 1️⃣6️⃣ : HTTP
+
+✅ Provide HttpClient
+export const appConfig: ApplicationConfig = {
+  providers: [provideHttpClient()],
+};
+
+✅ Inject HttpClient
+export class LaunchesRepository {
+  http = inject(HttpClient);
+}
+
+✅ Use HttpClient
+launchesUrl = `${environment.apiUrl}/launches`;
+getAll$ = () => this.http.get<LaunchDto[]>(this.launchesUrl);
