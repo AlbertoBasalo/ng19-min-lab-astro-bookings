@@ -1,0 +1,30 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 1️⃣3️⃣ : Inputs 
+
+✅ Declarar y recibir inputs
+@Component({
+  selector: 'lab-page-header',
+  template: `
+    <header>
+      <h2>{{ title() }}</h2>
+      @if(subtitle()){
+      <p>{{ subtitle() }}</p>
+      }
+    </header>
+  `,
+})
+export class PageHeaderComponent {
+  title: InputSignal<string> = input.required();
+  subtitle: InputSignal<string | undefined> = input();
+}
+
+✅ Usar inputs en el componente padre
+@Component({
+  imports: [PageHeaderComponent],
+  template: `<lab-page-header [title]="title" subtitle="Choose your journey" />`,
+})
+export class HomePage {
+  title: string = 'Upcoming Launches';
+}
+
+

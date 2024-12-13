@@ -1,0 +1,14 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 1️⃣7️⃣ : RxResource
+
+✅ Use RxResource
+launchesRs = rxResource(
+  { loader: this.launchesRepository.getAll$ }
+);
+
+✅ Use RxResource signals
+launches = computed(() => this.launchesRs.value() ?? []);
+errorMessage = computed(() => this.launchesRs.error() || 'Unknown');
+isLoading = computed(() => this.launchesRs.status() === 2);
+
+
