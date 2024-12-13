@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { AuthStore } from '@services/auth.store';
 
 
+
 /**
  * Functional Auth Interceptor  
  * - It adds the authorization header to the request
