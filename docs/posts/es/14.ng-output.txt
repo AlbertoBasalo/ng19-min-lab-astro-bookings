@@ -1,0 +1,27 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 1️⃣4️⃣ : Outputs
+
+✅ Declarar y emitir outputs
+@Component({
+  selector: 'lab-login-form',
+  template: `
+    <button type="submit" (click)="submit()"> Login </button>
+  `,
+})  
+export class LoginForm {
+  login: OutputEmitterRef<LoginDto> = output<LoginDto>();
+  submit(): void {
+    this.login.emit(this.loginDto);
+  }
+}
+
+✅ Usar outputs en el componente padre
+@Component({
+  imports: [LoginForm],
+  template: `<lab-login-form (login)="login($event)" />`,
+})
+export class LoginPage {
+  login(loginDto: LoginDto): void {
+    console.log("Dispatching login request", loginDto);
+  }
+}

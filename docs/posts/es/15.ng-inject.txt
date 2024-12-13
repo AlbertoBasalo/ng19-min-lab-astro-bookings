@@ -1,0 +1,22 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 1️⃣5️⃣ : Inyección de dependencias
+
+✅ Declarar servicios inyectables
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService {
+  postLogin(loginDto: LoginDto): void {
+    console.log("Dispatching login request", loginDto);
+  }
+}
+
+
+✅ Solicitar inyección de dependencias
+export default class LoginPage {
+  private readonly authService = inject(AuthService);
+  login(loginDto: LoginDto): void {
+    this.authService.postLogin(loginDto);
+  }
+}
+

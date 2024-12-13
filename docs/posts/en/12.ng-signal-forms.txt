@@ -1,0 +1,32 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 1️⃣2️⃣ : Signal Forms
+
+✅ Bind inputs to signals
+
+password = signal('');
+confirmPassword = signal('');
+
+<input
+    id="confirmPassword"
+    name="confirmPassword"
+    type="password"
+    placeholder="Confirm Password"
+    [(ngModel)]="confirmPassword"
+    #confirmPasswordModel="ngModel"
+    [attr.aria-invalid]="modelInvalid(confirmPasswordModel)"
+/>
+
+✅ Validate using effects and viewChild
+
+confirmPasswordModel = viewChild<NgModel>('confirmPasswordModel');
+private passwordValidationEffect = effect(() => {
+  const model = this.confirmPasswordModel();
+  if (!model) return;
+  const control = model.control;
+  if (this.password() === this.confirmPassword()) {
+    control.setErrors(null);
+  } else {
+    control.setErrors({ passwordMismatch: true });
+  }
+});
+
