@@ -1,0 +1,24 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 1️⃣0️⃣ : Forms
+
+✅ Importar el FormsModule
+import { FormsModule } from '@angular/forms';
+@Component({
+  imports: [FormsModule],
+  template: `...`,
+})
+export default class LoginPage {}
+
+✅ Añadir el ngModel directive al template
+<input
+    name="email"
+    [(ngModel)]="email"
+/>
+
+✅ Obtener el valor del input en el componente
+public readonly email: string = ''; 
+login() {
+    console.log('Login: ', this.email);
+}
+
+

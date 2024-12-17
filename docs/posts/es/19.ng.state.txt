@@ -1,0 +1,39 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 1️⃣9️⃣ : State
+
+✅ Añadir un servicio de almacenamiento con estado privado basado en señales
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthStore {
+  private readonly authState: WritableSignal<UserTokenDto> =
+    signal<UserTokenDto>(NULL_USER_TOKEN);
+}
+✅ Inicializar el estado del servicio, si es necesario
+constructor() {
+  const localUserToken = localStorage.getItem('userToken');
+  if (!localUserToken) return;
+  const userToken = JSON.parse(localUserToken);
+  this.authState.set(userToken);
+}
+✅ Añadir funciones que despachen cambios en el estado
+public dispatchLogin(userToken: UserTokenDto) {
+  this.authState.set(userToken);
+}
+public dispatchRefreshToken(accessToken: string) {
+  this.authState.update((state) => ({ ...state, accessToken }));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

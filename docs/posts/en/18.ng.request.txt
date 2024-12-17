@@ -1,0 +1,11 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 1️⃣8️⃣ : RxRequest
+
+✅ Use Request trigger
+launchResource = rxResource({
+  request: ()=> this.id(),
+  loader: (param) => this.launchesRepository.getById$(param.request)
+})
+
+
+

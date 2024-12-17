@@ -1,0 +1,19 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 2️⃣0️⃣ : Selectores
+
+✅ Añadir un selector como proyección de un estado
+public readonly selectToken: Signal<string> = computed(
+  () => this.authState().accessToken
+);
+✅ Componer selectores para derivar nuevos estados
+public readonly selectIsAuthenticated: Signal<boolean> = computed(
+  () => this.selectToken() !== ''
+);
+
+
+
+
+
+
+
+
