@@ -46,17 +46,7 @@ export class AuthStore {
   public dispatchLogout() {
     this.authState.set(NULL_USER_TOKEN);
   }
-
   public dispatchRefreshToken(accessToken: string) {
     this.authState.update((state) => ({ ...state, accessToken }));
   }
-
-  //public dispatchRefreshToken(accessToken: string) {
-  // this.authState.update((state) => {
-  //   // state.accessToken = accessToken;
-  //   // return state;
-  //   //const newState = { ...state, accessToken };
-  //   return { ...state, accessToken };
-  // });
-  //}
 }
