@@ -1,0 +1,16 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 2️⃣1️⃣ : Effects
+
+✅ Añadir un efecto, con un disparador y una acción
+private readonly localStoreEffect = effect(() => {
+  const userToken = this.authState(); // trigger
+  // effect
+  if (userToken === NULL_USER_TOKEN) {
+    localStorage.removeItem('userToken');
+  } else {
+    localStorage.setItem('userToken', JSON.stringify(userToken));
+  }
+});
+
+
+

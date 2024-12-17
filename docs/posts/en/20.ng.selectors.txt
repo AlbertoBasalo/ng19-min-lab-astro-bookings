@@ -1,0 +1,19 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 2️⃣0️⃣ : Selectors
+
+✅ Add a selector
+public readonly selectToken: Signal<string> = computed(
+  () => this.authState().accessToken
+);
+✅ Compose selectors
+public readonly selectIsAuthenticated: Signal<boolean> = computed(
+  () => this.selectToken() !== ''
+);
+
+
+
+
+
+
+
+

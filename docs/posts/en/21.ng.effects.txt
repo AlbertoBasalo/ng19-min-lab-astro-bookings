@@ -1,0 +1,16 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 2️⃣1️⃣ : Effects
+
+✅ Add an effect, with a trigger and an action
+private readonly localStoreEffect = effect(() => {
+  const userToken = this.authState(); // trigger
+  // effect
+  if (userToken === NULL_USER_TOKEN) {
+    localStorage.removeItem('userToken');
+  } else {
+    localStorage.setItem('userToken', JSON.stringify(userToken));
+  }
+});
+
+
+

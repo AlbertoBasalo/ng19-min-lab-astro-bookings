@@ -1,0 +1,39 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 1️⃣9️⃣ : State
+
+✅ Add a service store with private signal state
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthStore {
+  private readonly authState: WritableSignal<UserTokenDto> =
+    signal<UserTokenDto>(NULL_USER_TOKEN);
+}
+✅ Initialize the store, if needed
+constructor() {
+  const localUserToken = localStorage.getItem('userToken');
+  if (!localUserToken) return;
+  const userToken = JSON.parse(localUserToken);
+  this.authState.set(userToken);
+}
+✅ Add a dispatch function
+public dispatchLogin(userToken: UserTokenDto) {
+  this.authState.set(userToken);
+}
+public dispatchRefreshToken(accessToken: string) {
+  this.authState.update((state) => ({ ...state, accessToken }));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
