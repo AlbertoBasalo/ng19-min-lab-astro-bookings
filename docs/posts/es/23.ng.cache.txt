@@ -1,0 +1,28 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 2️⃣3️⃣ : Cache
+
+✅ Cachea llamadas HTTP
+const cache = new Map<string, HttpResponse<any>>();
+export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
+  if (req.method !== 'GET') return next(req);
+  const cachedResponse: HttpResponse<any> | undefined = cache.get(req.url);
+  if (cachedResponse) return of(cachedResponse);
+  return next(req).pipe(
+    tap((event) => {
+      if (event instanceof HttpResponse) {
+        cache.set(req.url, event);
+      }
+    })
+  );
+};
+
+✅ Registra el interceptor
+{
+  providers: [
+    provideHttpClient(  
+      withInterceptors([cacheInterceptor])
+    ),	
+  ],
+}	
+
+

@@ -1,0 +1,29 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Day 2️⃣4️⃣ : Zoneless
+
+✅ Generate a zone-less app
+```shell
+ng new advent-2024 --experimental-zoneless
+```
+
+✅ Or remove the zone from the dependencies
+```shell
+npm uninstall zonejs
+```
+
+✅ Add the provider while configuring the project
+{
+  providers: [
+    provideExperimentalZonelessChangeDetection(),
+  ],
+}	
+
+✅ And clear the zone from the polyfills
+```json
+  "polyfills": [],
+```
+
+🅰️ The future of Angular is bright and zone-less
+
+🎄 Merry Christmas and Happy New Year! 🎉
+

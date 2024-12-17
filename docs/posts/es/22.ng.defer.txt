@@ -1,0 +1,21 @@
+🅰️ Angular 1️⃣9️⃣ 🎄Advent  
+Día 2️⃣2️⃣ : Defer
+
+✅ Difiere contenido no crítico
+@defer () {
+  <p>Suscríbete a nuestro boletín informativo</p>
+} 
+
+✅ Defer puede incluso evitar contenido no utilizado o inapropiado
+@defer (when isLoggedIn()) {
+  <lab-book-seats-form 
+    [launch]="launch()" 
+    [rocket]="rocket()" 
+    [(seats)]="bookSeats" 
+    (bookNow)="book()"
+  />
+}
+
+
+
+
