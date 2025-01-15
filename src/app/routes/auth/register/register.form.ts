@@ -136,7 +136,7 @@ export class RegisterForm {
    * - It is an effect to validate the passwords are the same
    * - Triggers when:
    * - the confirm password model changes
-   * - the passwords matches computed signal changes
+   * - any of the password values changes
    */
   private passwordValidationEffect = effect(() => {
     // Triggers
