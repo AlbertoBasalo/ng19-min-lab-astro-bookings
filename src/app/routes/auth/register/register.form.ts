@@ -1,4 +1,14 @@
-import { Component, computed, effect, inject, output, OutputEmitterRef, signal, viewChild, WritableSignal } from "@angular/core";
+import { JsonPipe } from "@angular/common";
+import {
+  Component,
+  effect,
+  inject,
+  output,
+  OutputEmitterRef,
+  signal,
+  viewChild,
+  WritableSignal,
+} from "@angular/core";
 import { FormsModule, NgModel } from "@angular/forms";
 import { RegisterDto } from "@models/register.dto";
 import { FormsService } from "@services/forms.service";
@@ -9,8 +19,8 @@ import { FormsService } from "@services/forms.service";
  * @requires FormsService to check if the model must be marked as invalid
  */
 @Component({
-  selector: 'lab-register-form',
-  imports: [FormsModule],
+  selector: "lab-register-form",
+  imports: [FormsModule, JsonPipe],
   template: `
     <form #f="ngForm">
       <fieldset>
@@ -25,8 +35,7 @@ import { FormsService } from "@services/forms.service";
             #usernameModel="ngModel"
             required
             minlength="3"
-            [attr.aria-invalid]="modelInvalid(usernameModel)"
-          />
+            [attr.aria-invalid]="modelInvalid(usernameModel)" />
           @if(modelInvalid(usernameModel)){
           <small>User name must be at least 3 characters long</small>
           }
@@ -42,8 +51,7 @@ import { FormsService } from "@services/forms.service";
             #emailModel="ngModel"
             required
             email
-            [attr.aria-invalid]="modelInvalid(emailModel)"
-          />
+            [attr.aria-invalid]="modelInvalid(emailModel)" />
           @if(modelInvalid(emailModel)){
           <small>Invalid email</small>
           }
@@ -59,8 +67,7 @@ import { FormsService } from "@services/forms.service";
             #passwordModel="ngModel"
             required
             minlength="4"
-            [attr.aria-invalid]="modelInvalid(passwordModel)"
-          />
+            [attr.aria-invalid]="modelInvalid(passwordModel)" />
           @if(modelInvalid(passwordModel)){
           <small>Password must be at least 4 characters long</small>
           }
@@ -74,17 +81,17 @@ import { FormsService } from "@services/forms.service";
             placeholder="Confirm Password"
             [(ngModel)]="confirmPassword"
             #confirmPasswordModel="ngModel"
-            [attr.aria-invalid]="modelInvalid(confirmPasswordModel)"
-          />
+            [attr.aria-invalid]="modelInvalid(confirmPasswordModel)" />
         </section>
       </fieldset>
       <button type="submit" [disabled]="f.invalid" (click)="submit()">
         Register
       </button>
+      <pre>{{ f.errors | json }} - {{ f.invalid ? "invalid" : "valid" }}</pre>
     </form>
   `,
 })
-export  class RegisterForm {
+export class RegisterForm {
   private readonly formsService = inject(FormsService);
   /**
    * Emits an event when the form is submitted
@@ -92,32 +99,37 @@ export  class RegisterForm {
    * @example
    * <lab-register-form (register)="register($event)" />
    */
-  public readonly register: OutputEmitterRef<RegisterDto> = output<RegisterDto>();
+  public readonly register: OutputEmitterRef<RegisterDto> =
+    output<RegisterDto>();
 
-  protected readonly username: WritableSignal<string> = signal('');
-  protected readonly email: WritableSignal<string> =   signal('');
-  protected readonly password: WritableSignal<string> = signal('');
-  protected readonly confirmPassword: WritableSignal<string> = signal('');
+  protected readonly username: WritableSignal<string> = signal("testing");
+  protected readonly email: WritableSignal<string> = signal("test@acme.com");
+  protected readonly password: WritableSignal<string> = signal("");
+  protected readonly confirmPassword: WritableSignal<string> = signal("");
 
   /**
    * Checks if the model must be marked as invalid
    * - It is a helper function to avoid pristine invalid marks
    */
-  protected readonly modelInvalid = (model: NgModel): boolean | undefined => this.formsService.modelInvalid(model);
+  protected readonly modelInvalid = (model: NgModel): boolean | undefined =>
+    this.formsService.modelInvalid(model);
 
   /**
    * The confirm password model template reference
    * - A view child signal to selects an element by its _Angular#Id_
    */
-  protected readonly confirmPasswordModel = viewChild<NgModel>('confirmPasswordModel');
+  protected readonly confirmPasswordModel = viewChild<NgModel>(
+    "confirmPasswordModel"
+  );
 
   /**
    * The passwords matches computed signal
    * - It is a computed signal to check if the passwords are the same
    */
-  private readonly passwordsMatches = computed(
-    () => this.password() === this.confirmPassword()
-  );
+  // private readonly passwordsMatches = computed(
+  //   () => this.password() === this.confirmPassword()
+  // WARNING: This ONLY TRIGGERS WHEN THE BOOLEAN VALUE CHANGES, BUT OMITS CERTAIN SCENARIOS
+  // );
 
   /**
    * The password validation effect
@@ -127,10 +139,15 @@ export  class RegisterForm {
    * - the passwords matches computed signal changes
    */
   private passwordValidationEffect = effect(() => {
+    // Triggers
+    const password = this.password();
+    const confirmPassword = this.confirmPassword();
+    const passwordMatches = password === confirmPassword;
     const model = this.confirmPasswordModel();
     if (!model) return;
+    // Effects
     const control = model.control;
-    if (this.passwordsMatches()) {
+    if (passwordMatches) {
       control.setErrors(null);
     } else {
       control.setErrors({ passwordMismatch: true });
